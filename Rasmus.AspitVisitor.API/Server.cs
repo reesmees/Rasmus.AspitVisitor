@@ -22,7 +22,7 @@ namespace Rasmus.AspitVisitor.API
         /// The IP Address of the server.
         /// </summary>
         public IPAddress ServerIpAddress { get; }
-        public DataHandler handler = new DataHandler(new AspitVisitorContext());
+        public DataHandler handler = new DataHandler();
         public List<string> validRequests = new List<string> { "CountAllVisits", "CountVisitsByDepartment", "CountPotentialStudents", "CountPotentialStudentsByDepartment", "CalculateAgeSpread", "CalculateAverageVisitorAge", "CountVisitsByDepartmentAndDate", "CountNumberOfAnsweredQuestionaires", "CountNumberOfMunicipalities", "CountNumberOfVisitsByMunicipality" };
         /// <summary>
         /// The constructor initializes the IP Address and the TcpListener.
@@ -148,11 +148,15 @@ namespace Rasmus.AspitVisitor.API
         {
             if (splittedRequest[0].GetType() == typeof(string) && validRequests.Contains(splittedRequest[0]))
             {
-                if ((splittedRequest[0] == "CountVisitsByDepartment" || splittedRequest[0] == "CountPotentialStudentsByDepartment" || splittedRequest[0] == "CountNumberOfVisitsByMunicipality") && splittedRequest[1].GetType() != typeof(string))
+                if ((splittedRequest[0] == "CountVisitsByDepartment" || splittedRequest[0] == "CountPotentialStudentsByDepartment" || splittedRequest[0] == "CountNumberOfVisitsByMunicipality") && splittedRequest.Length != 2)
                 {
                     return false;
                 }
-                if (splittedRequest[0] == "CountVisitsByDepartmentAndDate" && (splittedRequest[1].GetType() != typeof(string) || !DateTime.TryParse(splittedRequest[2], out DateTime dateTime)))
+                if (splittedRequest[0] == "CountVisitsByDepartmentAndDate" && splittedRequest.Length != 3)
+                {
+                    return false;
+                }
+                if (!DateTime.TryParse(splittedRequest[2], out DateTime dateTime))
                 {
                     return false;
                 }

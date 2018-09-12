@@ -14,9 +14,9 @@ namespace Rasmus.AspitVisitor.Business
         private DataUpdater updater;
         private AspitVisitorContext db;
 
-        public DataHandler(AspitVisitorContext dB)
+        public DataHandler()
         {
-            DB = dB;
+            DB = new AspitVisitorContext();
             Creator = new DataCreator(DB);
             Reader = new DataReader(DB);
             Updater = new DataUpdater(DB);

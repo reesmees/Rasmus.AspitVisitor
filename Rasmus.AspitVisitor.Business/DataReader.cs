@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -59,7 +60,7 @@ namespace Rasmus.AspitVisitor.Business
 
         public int CountVisitsByDepartmentAndDate(AspitDepartment department, DateTime date)
         {
-            return db.Visits.Where(v => v.AspitDepartment.departmentName == department.departmentName && v.visitStartTime.Date == date.Date).Count();
+            return db.Visits.Where(v => v.AspitDepartment.departmentName == department.departmentName && DbFunctions.TruncateTime(v.visitStartTime) == DbFunctions.TruncateTime(date)).Count();
         }
 
         public int CountNumberOfAnsweredQuestionaires()
