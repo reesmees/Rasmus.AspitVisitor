@@ -32,7 +32,7 @@ namespace Rasmus.AspitVisitor.Business
 
         public int CountVisitsByDepartment(AspitDepartment department)
         {
-            return db.Visits.Where(v => v.AspitDepartment == department).Count();
+            return db.Visits.Where(v => v.AspitDepartment.departmentName == department.departmentName).Count();
         }
 
         public int CountPotentialStudents()
@@ -42,7 +42,7 @@ namespace Rasmus.AspitVisitor.Business
 
         public int CountPotentialStudentsByDepartment(AspitDepartment department)
         {
-            return db.Visits.Where(v => v.AspitDepartment == department && v.visitorWantsToStudyAtAspit == true).Count();
+            return db.Visits.Where(v => v.AspitDepartment.departmentName == department.departmentName && v.visitorWantsToStudyAtAspit == true).Count();
         }
 
         public int CalculateAgeSpread()
@@ -59,7 +59,7 @@ namespace Rasmus.AspitVisitor.Business
 
         public int CountVisitsByDepartmentAndDate(AspitDepartment department, DateTime date)
         {
-            return db.Visits.Where(v => v.AspitDepartment == department && v.visitStartTime.Date == date.Date).Count();
+            return db.Visits.Where(v => v.AspitDepartment.departmentName == department.departmentName && v.visitStartTime.Date == date.Date).Count();
         }
 
         public int CountNumberOfAnsweredQuestionaires()
